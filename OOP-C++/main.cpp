@@ -1,14 +1,7 @@
 #include <iostream>
-
+#include <string>
 using namespace std;
 
-#include <iostream>
-#include <string>
-
-#include <iostream>
-#include <string>
-
-using namespace std;
 
 class Student {
 private:
@@ -23,7 +16,6 @@ private:
     string groupNumber;
 
 public:
-    // Function to input data
     void inputData() {
         cout << "Enter full name: ";
         getline(cin, fullName);
