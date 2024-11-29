@@ -1,95 +1,72 @@
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
-#include <iostream>
-#include <string>
 
-#include <iostream>
-#include <string>
-
-using namespace std;
-
-class Student {
+class Point {
 private:
-    string fullName;
-    string birthDate;
-    string phoneNumber;
-    string city;
-    string country;
-    string universityName;
-    string universityCity;
-    string universityCountry;
-    string groupNumber;
+    double x, y, z;
 
 public:
-    // Function to input data
+    Point() : x(0), y(0), z(0) {}
+
     void inputData() {
-        cout << "Enter full name: ";
-        getline(cin, fullName);
-        cout << "Enter birth date (DD/MM/YYYY): ";
-        getline(cin, birthDate);
-        cout << "Enter phone number: ";
-        getline(cin, phoneNumber);
-        cout << "Enter city: ";
-        getline(cin, city);
-        cout << "Enter country: ";
-        getline(cin, country);
-        cout << "Enter university name: ";
-        getline(cin, universityName);
-        cout << "Enter university city: ";
-        getline(cin, universityCity);
-        cout << "Enter university country: ";
-        getline(cin, universityCountry);
-        cout << "Enter group number: ";
-        getline(cin, groupNumber);
+        cout << "Enter x-coordinate: ";
+        cin >> x;
+        cout << "Enter y-coordinate: ";
+        cin >> y;
+        cout << "Enter z-coordinate: ";
+        cin >> z;
     }
 
     void displayData() const {
-        cout << "Full Name: " << fullName << "\n";
-        cout << "Birth Date: " << birthDate << "\n";
-        cout << "Phone Number: " << phoneNumber << "\n";
-        cout << "City: " << city << "\n";
-        cout << "Country: " << country << "\n";
-        cout << "University Name: " << universityName << "\n";
-        cout << "University City: " << universityCity << "\n";
-        cout << "University Country: " << universityCountry << "\n";
-        cout << "Group Number: " << groupNumber << "\n";
+        cout << "Point coordinates: (" << x << ", " << y << ", " << z << ")\n";
     }
 
-    string getFullName() const { return fullName; }
-    void setFullName(const string& name) { fullName = name; }
+    double getX() const { return x; }
+    void setX(double xValue) { x = xValue; }
 
-    string getBirthDate() const { return birthDate; }
-    void setBirthDate(const string& date) { birthDate = date; }
+    double getY() const { return y; }
+    void setY(double yValue) { y = yValue; }
 
-    string getPhoneNumber() const { return phoneNumber; }
-    void setPhoneNumber(const string& phone) { phoneNumber = phone; }
+    double getZ() const { return z; }
+    void setZ(double zValue) { z = zValue; }
 
-    string getCity() const { return city; }
-    void setCity(const string& cityName) { city = cityName; }
+    void saveToFile(const string& filename) const {
+        ofstream outFile(filename);
+        if (outFile.is_open()) {
+            outFile << x << " " << y << " " << z << "\n";
+            outFile.close();
+        }
+        else {
+            cerr << "Error opening file for writing.\n";
+        }
+    }
 
-    string getCountry() const { return country; }
-    void setCountry(const string& countryName) { country = countryName; }
-
-    string getUniversityName() const { return universityName; }
-    void setUniversityName(const string& name) { universityName = name; }
-
-    string getUniversityCity() const { return universityCity; }
-    void setUniversityCity(const string& city) { universityCity = city; }
-
-    string getUniversityCountry() const { return universityCountry; }
-    void setUniversityCountry(const string& country) { universityCountry = country; }
-
-    string getGroupNumber() const { return groupNumber; }
-    void setGroupNumber(const string& group) { groupNumber = group; }
+    void loadFromFile(const string& filename) {
+        ifstream inFile(filename);
+        if (inFile.is_open()) {
+            inFile >> x >> y >> z;
+            inFile.close();
+        }
+        else {
+            cerr << "Error opening file for reading.\n";
+        }
+    }
 };
 
 
+
 int main() {
-	Student student;
-	student.inputData();
-	student.displayData();
+	Point p1;
+	p1.inputData();
+	p1.displayData();
+	p1.saveToFile("point.txt");
+
+	Point p2;
+	p2.loadFromFile("point.txt");
+	p2.displayData();
 
 
 	return 0;
